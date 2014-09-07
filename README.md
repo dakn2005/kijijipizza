@@ -9,7 +9,7 @@ Nodejs, delivery system, SPA implementing RESTful API on Express
 
 <strong>Installment</strong>
 - Clone repository into local machine
-- npm install all required dependancies
+- <strong>npm install all required dependancies</strong>
 - Run mongodb (must do this before running the app)
 - Run app
 
