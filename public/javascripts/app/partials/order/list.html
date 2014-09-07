@@ -1,0 +1,75 @@
+<!-- for a normal user [notEmployee/notAdmin] -->
+<style>
+    table{ width: 100%; }
+    td ul {width: 100; list-style:none; margin-left:0}
+    td ul li hr { height:1px; min-height:1px; margin-left:0; }
+    .hdnCancel { opacity: 0; width: 1px; height: 1px; }
+</style>
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/orders/create">Order</a>
+        </li>
+    </ul>
+
+    <br />
+
+    <h3>Order
+        <span class="badge badge-info">{{orders.length}}</span>
+    </h3>
+
+    <div ng-init="allOrders()">
+
+        <table class="table table-hover" ng-show="orders.length > 0">
+            <!--table-bordered  -->
+            <thead>
+                <th>Delivery Date</th>
+                <th>Items</th>
+                <th>Status</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orders | orderBy:'DateOrdered':true">
+                    <td>
+                        <a href="#">{{order.DeliveryDate}}</a>
+                    </td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="oitem in order.Items">
+                                <u><i>{{oitem.name}}</i></u>
+                                <br/>size: {{oitem.selectedscheme.size}} &nbsp; quantity: {{oitem.quantity}}
+                                <br />
+                                <b>total: {{oitem.totalcharged}}</b>
+<!--                                <hr ng-show="order.Items.length > 1" />-->
+                            </li>
+                        </ul>
+                        <span class="label label-warning pull-right">{{order.fulltotal}}</span>
+                        <span style="font-size:11px; font-style: italic">ordered on:  {{order.DateOrdered}}</span>
+                    </td>
+                    <td>
+                        <span class="badge {{getStatusClass(order.Status)}}">
+                            {{order.Status}}
+                        </span>
+                    </td>
+                    <td>
+                        <button ng-show="canCancel" id="btncancel{{$index}}" ng-click="deleteOrder(order)" class="btn btn-mini btn-danger">
+                            <i class="fa fa-eraser"></i>
+                            Cancel
+                        </button>
+                        
+<!--                        <input type="text" id="txt{{$index}}" class="" ng-model="order.Status" value="{{order.Status}}" />-->
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</div>

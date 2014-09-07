@@ -1,0 +1,44 @@
+<div ng-init="allUsers()">
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/intro">
+				<span class="icon-home" style="color: blue"></span>
+			</a>
+			<span class="divider">/</span>
+		</li>
+		<li>
+			<a href="#/employees">All employees</a>
+		</li>
+	</ul>
+
+	<br />
+	<h3>Add Employee</h3>
+
+	<form ng-submit="createEmployee()">
+		<label>UserID</label>
+		<!--
+        <select>
+            <option ng-repeat="user in users" ng-model="employee.userid" value="{{user._id}}">{{user.username}}</option>
+        </select>
+			-->
+		<select ng-model="employee.usermodel" ng-options="user.username for user in users" required/>
+		<label>Names</label>
+		<input type="text" ng-model="employee.name" placeholder="Names" required/>
+		<label>Email</label>
+		<input type="email" ng-model="employee.email" placeholder="Email" required/>
+		<label>ID number</label>
+		<input type="number" ng-model="employee.idnumber" placeholder="id number" required/>
+		<br/>
+		Administrator Rights <input type="checkbox" ng-model='employee.isAdmin' />
+		<br/>
+		<input type="submit" value="Save" class="btn btn-info" />
+	</form>
+</div>
+
+<script>
+	//    $(function(){
+	//        $('input:button').on('click',function(){
+	//            alert('warever');
+	//        })
+	//    })
+</script>

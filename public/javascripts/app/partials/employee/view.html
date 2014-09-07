@@ -1,0 +1,22 @@
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/employees">All employees</a>
+        </li>
+    </ul>
+    <br />
+
+    <h4>Employee Record</h4>
+
+    <div ng-init="oneEmployee()">
+        <b>ID: {{employees.IDNumber}}</b>
+        <br />name: {{employees.EmployeeName}}
+        <br/>email: {{employees.Email}}
+    </div>
+</div>

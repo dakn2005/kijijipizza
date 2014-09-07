@@ -1,0 +1,23 @@
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/users">All Users</a>
+        </li>
+    </ul>
+    <br />
+
+    <h4>User Details</h4>
+
+    <div ng-init="oneUser()">
+        <b>Username: {{users.username}}</b><br/>
+        email: {{users.email}}<br />
+        isAdmin: {{!!users.isAdmin}}<br />
+        isEmployee: {{!!users.isEmployee}}
+    </div>
+</div>

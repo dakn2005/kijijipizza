@@ -1,0 +1,83 @@
+<!-- view delivery schedule -->
+<style>
+    table{ width: 100%; }
+    td ul {width: 100; list-style:none; margin-left:0}
+/*    td ul li hr{ height:1px; min-height:1px; margin-left:0; }*/
+</style>
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/employees/create">Catalogue</a>
+        </li>
+    </ul>
+
+    <br />
+
+    <h3>Order
+        <span class="badge badge-info">{{orders.length}}</span>
+    </h3>
+
+    <div ng-init="allOrders()">
+        <div class="span11 well">
+            <button class="btn btn-success btn-small pull-right">
+                Assign
+            </button>
+        </div>
+        <table class="table table-hover" ng-show="orders.length > 0">
+            <!--table-bordered  -->
+            <thead>
+                <th>Assign To</th>
+                <th>Delivery Date</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Items</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in orders | orderBy:'OrderDate':true">
+                    <td>
+                        {{order.AssignedTo.EmployeeName}}
+                    </td>
+                    <td>
+                        <a href="#">{{order.DeliveryDate}}</a>
+                    </td>
+                    <td>
+                        {{order.Location}}
+                    </td>
+                    <td>
+                        <span class="badge {{order.statusclass}}">
+                            {{order.Status}}
+                        </span>
+                    </td>
+
+                    <td>
+                        <ul>
+                            <li ng-repeat="oitem in order.Items">
+                                <i>{{oitem.name}}</i>, size: {{oitem.selectedscheme.size}}, quantity: {{oitem.quantity}}
+                            </li>
+                        </ul>
+                        <span class="label label-warning pull-right">{{order.fulltotal}}</span>
+                        <span style="font-size:11px; font-style: italic">ordered on: {{order.OrderDate}}</span>
+                    </td>
+
+                    <td>
+                        <button ng-show="canCancel" class="btn btn-mini btn-danger">
+                            <i class="fa fa-eraser"></i>
+                            Cancel
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+</div>
+

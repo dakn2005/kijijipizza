@@ -1,0 +1,26 @@
+<div ng-init="oneEmployee()">
+     <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/employees">All employees</a>
+        </li>
+    </ul>
+    <br />
+    <h3>Update Record</h3>
+
+    <form ng-submit="updateEmployee()">
+        <label>Names</label>
+        <input type="text" ng-model="employees.EmployeeName" placeholder="Names" value="{{employees.EmployeeName}}" required/>
+        <label>Email</label>
+        <input type="text" ng-model="employees.Email" placeholder="Email" value="{{employees.Email}}" required/>
+        <label>ID number</label>
+        <input type="text" ng-model="employees.IDNumber" placeholder="id number" disabled="disabled" />
+        <br/>
+        <input type="submit" value="Save" class="btn btn-info" />
+    </form>
+</div>

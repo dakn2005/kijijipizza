@@ -1,0 +1,44 @@
+<div>
+	<h1>AlloyUI - Scheduler</h1>
+	<div id="scheduler"></div>
+
+	<script>
+		YUI({
+			filter: 'raw'
+		}).use('aui-scheduler', function (Y) {
+
+			var items = [
+				{
+					content: 'Wake Early'
+            },
+				{
+					content: 'Exercise'
+            },
+				{
+					content: 'Review or (even better) Rewrite Your Goals',
+					startDate: new Date(2014, 7, 8), //, 26
+					endDate: new Date(2014, 7, 8) //, 26
+
+            }
+        ];
+
+			new Y.Scheduler({
+				boundingBox: '#scheduler',
+				items: items,
+				views: [
+                new Y.SchedulerWeekView(),
+                new Y.SchedulerDayView(),
+                new Y.SchedulerMonthView(),
+                new Y.SchedulerAgendaView()
+            ],
+				eventRecorder: new Y.SchedulerEventRecorder({
+					duration: 30
+				})
+				// firstDayOfWeek: 1,
+				// activeView: weekView,
+				// views: [dayView, weekView, monthView, agendaView]
+			}).render();
+
+		});
+	</script>
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/employees/create">Add employee</a>
+        </li>
+    </ul>
+
+    <br />
+
+    <div ng-init="allEmployees()">
+        <!--        array: {{employees.length}}-->
+        <!--
+            <ul style="none">
+                <li ng-repeat="employee in employees">
+                    <a href="#/employees/{{employee._id}}">{{employee.EmployeeName}}</a>&nbsp;
+                    [<a class="del" href="#/employees/{{employee._id}}/update">edit</a> |
+                    <a class="del" ng-click="deleteEmployee(employee)">remove</a>]
+                </li>
+            </ul>
+-->
+        <!--        <h2 ng-hide="employees.length > 0" class="well">No employee has been added yet</h2>-->
+        <h3 ng-show="employees.length > 0">Employees  <span class="badge badge-info">{{employees.length}}</span></h3>
+
+
+        <table ng-show="employees.length > 0" class="table  table-hover" style="width: 500px;"><!-- table-bordered -->
+            <thead>
+				<th>User ID</th>
+                <th>Name</th>
+                <th>Operation</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees">
+					<td>
+						{{employee.UserId.username}}
+					</td>
+                    <td>
+                        <a href="#/employees/{{employee._id}}">{{employee.EmployeeName}}</a>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="del btn" href="#/employees/{{employee._id}}/update" title="update">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="del btn" ng-click="deleteEmployee(employee)" title="remove">
+                               <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                        <!--
+                        <a class="del" href="#/employees/{{employee._id}}/update">edit</a>/
+                        <a class="del" ng-click="deleteEmployee(employee)">remove</a>
+                        -->
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>

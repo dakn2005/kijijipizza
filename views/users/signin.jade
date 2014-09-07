@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+
+    div
+        
+        div.span-4
+            form(method='post' action='/users/session')
+                if (message.length > 0)
+                    p.alert.alert-danger= message
+                fieldset
+                    legend 
+                        h2 Login
+                    label UserName
+                    input(type="text", name="username", required, placeholder="Name")
+                    label password
+                    input(type="password", name="password", id="txtpassword", placeholder="password", required)
+                    br
+                    input.btn.btn-success(type="submit", value="login", style="width: 50%")
+                    &nbsp;
+                    | or &nbsp;
+                    a(href="/signup") sign up

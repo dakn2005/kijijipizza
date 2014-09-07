@@ -1,0 +1,146 @@
+<style>
+	table {
+		width: 100%;
+	}
+	td ul {
+		width: 100;
+		list-style: none;
+		margin-left: 0
+	}
+	/*    td ul li hr{ height:1px; min-height:1px; margin-left:0; }*/
+</style>
+
+<div>
+	<ul class="breadcrumb">
+		<li>
+			<a href="#/intro">
+				<span class="icon-home" style="color: blue"></span>
+			</a>
+			<span class="divider">/</span>
+		</li>
+		<!--
+        <li>
+            <a href="#/employees/create">Catalogue</a>
+        </li>
+-->
+	</ul>
+
+	<br />
+
+	<h3>Order
+        <span class="badge badge-info">{{orders.length}}</span>
+    </h3>
+
+	<div ng-init="allOrders()">
+		<div class="span11 well">
+			<div class="pull-right" style="span2">
+
+				<button id="btnRefresh" style="border: 0; background-color: transparent;" ng-click="pgRefresh()" >
+					<i class="fa fa-refresh"></i>
+				</button>
+
+				<button id="btnSave" class="btn btn-info btn-small" ng-show="global.isEmployee()" ng-click="updateOrder()">
+					<i class="fa fa-save"></i>
+					Save
+				</button>
+
+
+				<button id="btnAssign" class="btn btn-success btn-small" ng-show="global.isAdmin()">
+					<i class="fa fa-save"></i>
+					Assign
+				</button>
+
+			</div>
+		</div>
+
+		<div id="dSchedule" class="span11">
+			<table class="table table-hover" ng-show="orders.length > 0">
+				<!--table-bordered  -->
+				<thead>
+					<th ng-show="global.isAdmin()">Assign To</th>
+					<th>Delivery Date</th>
+					<th>Location</th>
+					<th ng-show="global.isAdmin() || global.isEmployee()">Status</th>
+					<th ng-show="global.isEmployee()">Is Delivered</th>
+					<th>Items</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="order in orders | orderBy:'OrderDate':true">
+						<td ng-show="global.isAdmin()">
+							<div ng-if="order.AssignedTo.EmployeeName == '' || order.AssignedTo.EmployeeName == null">
+								<select ng-model="emp" ng-options="employee.EmployeeName for employee in employees" 
+										ng-click="selectAssign(emp,order,'assigned')" />
+								<span style="display: none;">{{order.AssignedTo = emp._id}}</span>
+							</div>
+							
+							<div ng-if="order.AssignedTo != '' && order.AssignedTo != null">
+								<span>{{order.AssignedTo.EmployeeName}}</span>
+<!--
+								<span style="display: none;">
+									{{order.Status = 'assigned'}}
+								</span>
+-->
+								&nbsp;&nbsp;
+								<button ng-click="reAssign(order)" ng-show="order.Status != 'delivered'" style="margin-right: 10px; float: right;" title="edit">
+									<i class="fa fa-edit"></i>
+								</button>
+							</div>
+							
+						</td>
+						<td>
+							{{order.DeliveryDate}}
+						</td>
+						<td>
+							{{order.Location}}
+						</td>
+						<td ng-show="global.isAdmin() || global.isEmployee()">
+							<span class="badge {{getStatusClass(order.Status)}}">
+                                {{order.Status}}
+                            </span>
+						</td>
+						<td ng-show="global.isEmployee()">
+							<input type="checkbox" ng-change="checkAssign(order.isDelivered, order)" ng-model="order.isDelivered" style="margin: 2px auto; " />
+						</td>
+						<td>
+							<ul>
+								<li ng-repeat="oitem in order.Items">
+									<i>{{oitem.name}}</i>, size: {{oitem.selectedscheme.size}}, quantity: {{oitem.quantity}}
+								</li>
+							</ul>
+							<span style="font-size:11px; font-style: italic">ordered on: {{order.DateOrdered}}</span>
+							<span class="pull-right">
+                                <span class="label label-warning">{{order.fulltotal}}</span>
+							<!--
+                                <button ng-show="canCancel" class="btn btn-mini btn-danger">
+                                    <i class="fa fa-eraser"></i>
+                                    Cancel
+                                </button>
+-->
+							</span>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function () {
+		$('#btnAssign').on('click', function () {
+			angular.element(document.getElementById('dSchedule')).scope().$apply(function (scope) {
+				scope.updateOrder();
+			});
+		});
+		
+		$('#btnRefresh')
+			.on('mouseover',function(){
+				$(this).addClass('fa-spin');
+			})
+			.on('mouseout',function(){
+				$(this).removeClass('fa-spin');
+			});
+		
+	});
+</script>

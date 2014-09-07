@@ -1,0 +1,37 @@
+<div ng-init="oneUser()">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <span class="divider">/</span>
+        </li>
+        <li>
+            <a href="#/users">Users</a>
+        </li>
+    </ul>
+    <br />
+
+    <form ng-submit="updateUser()">
+        <fieldset>
+            <legend>
+                <h3>Update Record</h3>
+            </legend>
+            <label>Names</label>
+            <input type="text" ng-model="users.username" placeholder="Names" value="{{users.username}}" required/>
+            <label>Email</label>
+            <input type="text" ng-model="users.email" placeholder="Email" value="{{users.email}}" required/>
+            <br />
+            <!--        <label>Is Admin</label>-->
+<!--            <input type="checkbox" ng-hide="users.isAdmin" ng-model="users.isAdmin" />Is Admin-->
+            <br />
+<!--            <input type="checkbox" ng-model="users.isEmployee" />Is Employee [<b>{{users.isEmployee}}</b>]-->
+            <br/><br />
+            <div class="divider"></div>
+            <input type="submit" value="Save" class="btn btn-info" />
+
+
+        </fieldset>
+
+    </form>
+</div>

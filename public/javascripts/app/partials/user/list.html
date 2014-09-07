@@ -1,0 +1,53 @@
+<div ng-init="allUsers()">
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/intro">
+                <span class="icon-home" style="color: blue"></span>
+            </a>
+            <!--            <span class="divider">/</span>-->
+        </li>
+
+    </ul>
+
+    <br />
+
+    <h3>Users  <span class="badge badge-info">{{users.length}}</span></h3>
+
+    <div>
+        <!--        array: {{employees.length}}-->
+        <!--
+            <ul style="none">
+                <li ng-repeat="employee in employees">
+                    <a href="#/employees/{{employee._id}}">{{employee.EmployeeName}}</a>&nbsp;
+                    [<a class="del" href="#/employees/{{employee._id}}/update">edit</a> |
+                    <a class="del" ng-click="deleteEmployee(employee)">remove</a>]
+                </li>
+            </ul>
+-->
+        <table class="table table-hover" style="width: 500px;">
+            <!-- table-bordered -->
+            <thead>
+                <th>Name</th>
+                <th>Operation</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>
+                        <a href="#/users/{{user._id}}">{{user.username}}</a>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="del btn" href="#/users/{{user._id}}/update" title="update">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="del btn" ng-click="deleteUser(user)" title="remove">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>

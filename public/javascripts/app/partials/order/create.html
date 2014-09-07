@@ -1,0 +1,228 @@
+<style>
+    .catalogue{  padding:10px; width:65%; float: left; margin:10px; }
+        .scart{ border:1px solid #000;  padding:10px; width:25%; float: right; margin:10px; }
+        
+        .container2{ background:#ffffff; min-height: 100px;}
+        legend{ margin:0px; }
+        
+        .item, .sitem { cursor: pointer; }
+        .item { background:#fff; padding:10px; margin:5px; box-shadow: 1px 1px 5px #888888; float:left;}
+        .sitem { background:#fff; padding:10px; margin:5px; float:left;}
+        
+        .sitem > label, input { width:100px; }
+        .sitem select{ width: 110px; }
+</style>
+
+<div id="sCart">
+    <div id="main">
+        <div class="catalogue">
+            <legend>Pizzas</legend>
+            <div class="container2" data-bind="template: { name: 'pizzaTmpl', foreach: pizzas, templateOptions: { parentList: pizzas} }, sortableList: pizzas">
+            </div>
+        </div>
+        <script id="pizzaTmpl" type="text/html">
+            <div class="item" data-bind="sortableItem: { item: $data, parentList: $item.parentList }" >
+                <legend>
+                    <span data-bind="text: name"></span>
+                </legend>
+                <br/>
+                <img height="340px" width="200px" data-bind="attr : {src: imageSource}" />
+                <br/><br/>
+                <button class="btn btn-success btn-small" style="width: 100%;" data-bind="click: $root.addToCart">Add</button>
+            </div>
+        </script>
+    </div>
+
+    <form class="scart" ng-submit="showItems()">
+        <div id="moreDets" class="modal hide fade">
+            <div class="modal-header">
+                Details
+            </div>
+            <div class="modal-body">
+                <label>Delivered By:</label>
+                <input type="date" ng-model="oDDate" style="width: 50%" value="2014-5-15" required/> *&nbsp;
+                <input type="time" ng-model="oDTime" style="width: 20%" value ="21:00" required/> *
+                <label>Location</label>
+                <input type="text" ng-model="location" value="kiabu" required/> *
+                <label>Description</label>
+                <textarea ng-model="oDesc" style="width: 50%; min-height: 100px;"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-small" id="btnSave">Save</button>
+                <button class="btn btn-danger btn-small" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            </div>
+        </div>
+        <legend>
+            Shopping Cart &nbsp; [
+            <span data-bind="text: totals"></span>]
+            <button class="btn-warning btn-small btn" id="btnCart" type="button" data-toggle="modal" data-target="#moreDets">Order</button>
+        </legend>
+        <div class="container2" data-bind="template: { name: 'pizzaTmpl2', foreach: shoppingCartPizzas, templateOptions: { parentList: shoppingCartPizzas} }, sortableList: shoppingCartPizzas">
+        </div>
+    </form>
+    <script id="pizzaTmpl2" type="text/html">
+        <div class="sitem" data-bind="sortableItem: { item: $data, parentList: $item.parentList }" >
+                <label data-bind="text: name"></label>
+                <hr/>
+                <div style="float: left; width:40%; ">
+                    <img height="150px" width="100px" data-bind="attr : {src: imageSource}" />
+                </div>
+                <div style="float: right; width: 60%">
+                    <select data-bind="options: typeprice, value: selectedscheme, optionsText: 'size'"></select>
+                    <input data-bind="value: quantity" />
+                    <label data-bind="text: totalcharged"></label>
+                    <button class="btn btn-danger btn-small" data-bind="click: $root.removeFromCart">remove</button>      
+                </div>
+              
+            </div>
+    </script>
+    <!--
+ <div id="results">
+    <h2>High Priority Tasks</h2>
+    <ul data-bind="template: { name: 'resultTmpl', foreach: highPriorityTasks }"></ul>
+    <h2>Tasks</h2> 
+    <ul data-bind="template: { name: 'resultTmpl', foreach: normalPriorityTasks }"></ul>
+</div>
+
+<script id="resultTmpl" type="text/html">
+    <li data-bind="text: name"></li>
+</script> 
+-->
+</div>
+<script>
+    function Pizza(data) {
+            var self=this;
+            
+            self.name = ko.observable(data.name);
+            self.typeprice=ko.observable(data.typeprice);
+            self.selectedscheme=ko.observable(data.scheme);
+            self.quantity=ko.observable(data.quantity);
+            self.imageSource=ko.observable(data.imgsrc);
+            
+            self.totalcharged=ko.computed(function(){
+                return self.selectedscheme().price * self.quantity(); //ensure all variables are properly initialized before performing ko.computed
+            });
+        }
+        
+        function vmPizzas(){
+            var self=this;
+            
+            self.pizzas=ko.observableArray([
+                new Pizza({name: 'boerewors', typeprice: [ {size:'regular',price: '450' },{size:'medium',price: '650' }, {size:'large',price: '850' }],
+                          scheme:  function(){return this.typeprice[0] }, quantity:1, imgsrc: 'images/pizzas/boerewors.PNG'}),
+                new Pizza({name: 'chicken, bacon, BBQ', typeprice: [{size:'regular',price: '500' },{size:'medium',price: '700' }, {size:'large',price: '900' }],
+                             scheme:  function(){return this.typeprice[0] }, quantity:1, imgsrc: 'images/pizzas/chickenbaconccq.PNG'}),
+                new Pizza({name: 'four seasons', typeprice: [{size:'regular',price: '450' },{size:'medium',price: '650' }, {size:'large',price: '850' }],
+                             scheme:  function(){return this.typeprice[0] }, quantity:1, imgsrc: 'images/pizzas/fourseasons.PNG'}),
+                new Pizza({name: 'Hawaiian', typeprice: [{size:'regular',price: '450' },{size:'medium',price: '650' }, {size:'large',price: '850' }],
+                             scheme:  function(){return this.typeprice[0] }, quantity:1,  imgsrc: 'images/pizzas/hawaiian.PNG'}),
+                new Pizza({name: 'Meat deluxe', typeprice: [{size:'regular',price: '500' },{size:'medium',price: '700' }, {size:'large',price: '900' }],
+                              scheme:  function(){return this.typeprice[0] }, quantity:1,  imgsrc: 'images/pizzas/meatdeluxe.PNG'}),
+                new Pizza({name: 'periperi chicken', typeprice: [{size:'regular',price: '450' },{size:'medium',price: '650' }, {size:'large',price: '850' }],
+                              scheme:  function(){return this.typeprice[0] }, quantity:1,  imgsrc: 'images/pizzas/periperi.PNG'})
+            ]);
+            
+            self.shoppingCartPizzas=ko.observableArray([]);
+            
+            self.totals=ko.computed(function(){
+                var sum=0;
+                for (var i=0; i < self.shoppingCartPizzas().length; ++i){
+                    sum += self.shoppingCartPizzas()[i].selectedscheme().price * self.shoppingCartPizzas()[i].quantity();
+                }
+                return sum;
+            });
+            
+            self.rooter=function(c){
+                console.log(c);
+            }
+            
+            self.addToCart=function(pizz){
+                self.shoppingCartPizzas.push(pizz);
+                self.pizzas.remove(pizz);
+            };
+            
+            self.removeFromCart=function(pizz){
+                self.shoppingCartPizzas.remove(pizz);
+                self.pizzas.push(pizz);
+            }
+          
+        }
+        
+        
+        //connect items with observableArrays
+        ko.bindingHandlers.sortableList = {
+            init: function(element, valueAccessor, allBindingsAccessor, context) {
+                $(element).data("sortList", valueAccessor()); //attach meta-data
+                $(element).sortable({
+                    update: function(event, ui) {
+                        var item = ui.item.data("sortItem");
+                        if (item) {
+                            //identify parents
+                            var originalParent = ui.item.data("parentList");
+                            var newParent = ui.item.parent().data("sortList");
+                            //figure out its new position
+                            var position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+                            if (position >= 0) {
+                                originalParent.remove(item);
+                                newParent.splice(position, 0, item);
+                            }
+                            
+                            //ui.item.remove();
+                        }
+                    },
+                    connectWith: '.container2'
+                });
+            }
+        };
+        
+        //attach meta-data
+        ko.bindingHandlers.sortableItem = {
+            init: function(element, valueAccessor) {
+                var options = valueAccessor();
+                $(element).data("sortItem", options.item);
+                $(element).data("parentList", options.parentList);
+               
+            }
+        };
+        
+        //control visibility, give element focus, and select the contents (in order)
+        ko.bindingHandlers.visibleAndSelect = {
+            update: function(element, valueAccessor) {
+                ko.bindingHandlers.visible.update(element, valueAccessor);
+                if (valueAccessor()) {
+                    setTimeout(function() {
+                        $(element).focus().select();
+                    }, 0); //new tasks are not in DOM yet
+                }
+            }
+        }
+        
+        var viewModel=new vmPizzas();
+        ko.cleanNode(document.getElementById('sCart'));
+        ko.applyBindings(viewModel, document.getElementById('sCart'));
+    
+        $(function () {
+            $('#btnSave').on('click', function (e) {
+                if ($('form')[0].checkValidity()) {
+                    e.preventDefault();
+                    if (confirm('Checkout order?')) {
+                        angular.element(document.getElementById('sCart')).scope().$apply(function (scope) {
+                            scope.items = ko.toJSON(viewModel.shoppingCartPizzas);
+                            scope.createOrder();
+                            //scope.showItems();
+                        });   
+                        $('#moreDets').modal('hide').find('input, textarea').each(function(){
+                            $(this).text('');
+                            $(this).val('');
+                        });
+                    }
+                }
+                else{
+                    //allow the browser's default submit event behavior 
+                    return true;
+                }
+            });
+        });
+
+</script>

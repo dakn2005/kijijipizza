@@ -1,0 +1,49 @@
+doctype html
+html
+	head
+		title= "Pizzahut"
+		
+		link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+		link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.css')
+		link(rel='stylesheet', href='/stylesheets/anim.css')
+		link(rel='stylesheet', href="/stylesheets/font_awesome4.0.3/css/font-awesome.css")
+
+		script(src="javascripts/vendor/jquery/jquery-1.10.2.js")
+		script(src="javascripts/vendor/jquery/jquery-ui-1.10.4.custom.js")
+		script(src="javascripts/vendor/jquery/jquery.tmpl.js")
+		script(src="javascripts/vendor/angular/angular.js")
+		script(src="javascripts/vendor/angular/angular-animate.js")
+		script(src="javascripts/vendor/angular/angular-resource.js")
+		script(src="javascripts/vendor/angular/angular-route.js")
+		script(src="javascripts/vendor/modernizr.custom.js")
+		script(src="javascripts/vendor/bootstrap.js")
+		script(src="javascripts/vendor/knockout2.3.0.js")
+		script(src="javascripts/vendor/underscore-min.js")
+		//script(src="javascripts/vendor/h5validate.js")
+		script(src="javascripts/vendor/aui-min.js")
+
+		script(src="javascripts/app/controllers/index.js")
+		script(src="javascripts/app/controllers/employee.js")
+		script(src="javascripts/app/controllers/header.js")
+		script(src="javascripts/app/controllers/user.js")
+		script(src="javascripts/app/controllers/order.js")
+
+		script(src="javascripts/app/services/scEmployee.js")
+		script(src="javascripts/app/services/scGlobal.js")
+		script(src="javascripts/app/services/scUser.js")
+		script(src="javascripts/app/services/scOrder.js")
+
+		script(src="javascripts/app/app.js")
+
+		script.
+			yepnope(
+			{
+				test : Modernizr.inputtypes.email && Modernizr.input.required && Modernizr.input.placeholder, //&& browser!='safari',
+				nope : 'javascripts/vendor/h5validate.js'
+			});
+
+		header(data-ng-include="'javascripts/app/partials/header.html'")
+
+		body(ng-app="pizzaHutApp")
+			div.container
+				block content

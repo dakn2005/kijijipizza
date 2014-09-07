@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+            
+    script.
+        $(function(){
+            $('form').submit(function(e){
+                p1=$('#txtpassword').val();
+                p2=$('#txtcpassword').val();
+                if (p1!=='' && p2 !==''){
+                    if (p1 !== p2){
+                        //e.cancel=true;
+                        e.preventDefault();
+                        alert('passwords must match');
+                    }
+                }
+            });   
+            
+            
+        });
+    div
+        div.span-4
+            form(method='post' action='/users/create')
+                fieldset
+                    legend 
+                        h2 Sign Up
+                    label User Name
+                    input(type="text", name="username", required, placeholder="Name")
+                    label Email
+                    input(type="email", name="email", required, placeholder="Email")
+                    label Mobile Number
+                    input(type="number", name="mobilenumber", required, placeholder="phone number")
+                    label Location
+                    input(type="text", name="location", required, placeholder="location")
+                    label password
+                    input(type="password", name="password", id="txtpassword", placeholder="password", required)
+                    br
+                    input(type="password", id="txtcpassword", placeholder="confirm password", required)
+                    br
+                    input.btn.btn-success(type="submit", value="sign up", style="width: 50%")
+                    &nbsp;
+                    | or &nbsp;
+                    a(href="signin") login
