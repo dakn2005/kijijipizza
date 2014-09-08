@@ -1,7 +1,7 @@
 kijijipizza
 ===========
 
-This is a hotel delivery system, an SPA project implementing RESTful API on Express using Nodejs
+This is a hotel delivery system; a Nodejs SPA project implementing Angular RESTful API on Express 
 
 <strong>Requirements</strong>
 - download & install node js
